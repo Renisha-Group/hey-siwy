@@ -14,9 +14,16 @@ export async function sendRegistrationEmail({ name, email, mobile }) {
       service_id: serviceId,
       template_id: templateId,
       user_id: publicKey,
-      // `to_email` must match the EmailJS template's To Email field: {{to_email}}.
+      // The primary EmailJS template is addressed to the account holder in the
+      // EmailJS dashboard. `email` is used for Reply-To and its linked
+      // auto-reply template sends the confirmation to the registrant.
       // Passwords are intentionally never sent to EmailJS.
-      template_params: { name, to_email: email, contact_number: mobile },
+      template_params: {
+        name,
+        email,
+        to_email: email,
+        contact_number: mobile,
+      },
     }),
   })
 
